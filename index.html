@@ -1,148 +1,145 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>6z Era — Replicas</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>6z Mass</title>
 <style>
   :root{
-    --bg:#0f1724; --card:#0b1220; --accent:#7c3aed; --muted:#9aa4b2; --glass: rgba(255,255,255,0.03);
+    --bg1:#0f0f1a; --bg2:#08121a; --accent:#00e6a8; --card:#0b0b0f;
   }
   *{box-sizing:border-box}
   body{
-    margin:0;
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-    background: radial-gradient(1000px 600px at 10% 20%, rgba(124,58,237,0.12), transparent 10%),
-                radial-gradient(800px 500px at 90% 80%, rgba(59,130,246,0.06), transparent 10%),
-                var(--bg);
-    color:#e6eef8;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    padding:32px;
+    margin:0; min-height:100vh;
+    background:linear-gradient(135deg,var(--bg1),var(--bg2));
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color:#e6fff6; display:flex; align-items:center; justify-content:center;
+    padding:20px;
   }
-  header{
-    display:flex; align-items:center; gap:16px; margin-bottom:20px;
+
+  .wrap{
+    width:380px; max-width:96%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(0,230,168,0.12);
+    border-radius:12px; padding:18px; box-shadow:0 10px 30px rgba(2,8,15,0.6);
+  }
+
+  .head{
+    display:flex; align-items:center; gap:12px; margin-bottom:14px;
   }
   .logo{
-    width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg,var(--accent),#2563eb);
-    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; color:white;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6), inset 0 -6px 18px rgba(0,0,0,0.2);
+    width:56px; height:56px; border-radius:10px;
+    background:linear-gradient(135deg,#00140a,#003b2a);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; color:var(--accent); font-size:18px;
+    box-shadow:0 6px 16px rgba(0,0,0,0.6), inset 0 -6px 12px rgba(0,0,0,0.15);
   }
-  h1{margin:0; font-size:20px; letter-spacing:0.2px}
-  p.lead{margin:0; color:var(--muted); font-size:13px}
-  .controls{margin-left:auto; display:flex; gap:10px; align-items:center}
+  .title{
+    font-size:20px; letter-spacing:1px; color:#dffef0;
+  }
+  .subtitle{font-size:12px; color:rgba(220,255,240,0.7)}
+
+  .panel{margin-top:8px;}
+  input[type=text], input[type=number]{
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(0,230,168,0.08);
+    background:transparent; color:inherit; outline:none; font-size:14px;
+  }
+
+  .row{display:flex; gap:8px; margin-top:10px;}
   .btn{
-    background:var(--glass); border:1px solid rgba(255,255,255,0.04); padding:8px 12px; border-radius:10px; cursor:pointer;
-    font-weight:600; color:inherit; backdrop-filter: blur(6px);
+    flex:1; padding:10px 12px; border-radius:8px; border:none; cursor:pointer;
+    background:linear-gradient(90deg,var(--accent),#00ffd0); color:#00130a; font-weight:700;
+    box-shadow:0 6px 18px rgba(0,230,168,0.08);
   }
-  .count{
-    font-weight:700; color:var(--accent);
+  .btn.secondary{background:transparent; color:var(--accent); border:1px solid rgba(0,230,168,0.08); font-weight:600}
+
+  .progressWrap{margin-top:16px;}
+  .bar{
+    width:100%; height:12px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden;
+    border:1px solid rgba(0,0,0,0.3);
   }
-  main{
-    margin-top:18px;
+  .barInner{height:100%; width:0%; background:linear-gradient(90deg,#00e6a8,#00ffd0); transition:width 0.12s linear;}
+
+  .log{
+    margin-top:14px; height:230px; overflow:auto; background:#040606; border-radius:8px; padding:12px;
+    border:1px solid rgba(0,230,168,0.04); font-family:monospace; font-size:13px; color:#bfffe8;
+    white-space:pre-wrap;
   }
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap:14px;
-  }
-  .card{
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:12px;
-    min-height:84px;
-    display:flex; flex-direction:column; justify-content:space-between;
-    border:1px solid rgba(255,255,255,0.03);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .card:hover{ transform: translateY(-6px); box-shadow: 0 10px 30px rgba(2,6,23,0.6); }
-  .rep{ font-size:13px; color:var(--muted); }
-  .title{ font-weight:700; font-size:16px; margin-top:6px; letter-spacing:0.2px; color:#eaf2ff; }
-  .badge{
-    display:inline-block; padding:6px 8px; border-radius:999px; font-weight:700; font-size:12px;
-    background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  .badge.done{ color: #0b1220; background: linear-gradient(90deg,var(--accent),#06b6d4); }
-  footer{ margin-top:18px; color:var(--muted); font-size:13px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
-  .search{ padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:inherit; outline:none; min-width:220px}
-  @media (max-width:560px){
-    .grid{ grid-template-columns: repeat(2, 1fr); }
-  }
+  .small{font-size:12px; color:rgba(200,255,240,0.7); margin-top:6px; text-align:center}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">6z</div>
-  <div>
-    <h1>6z Era — Replica Index</h1>
-    <p class="lead">Dummy clone — दिखने में original जैसा पर काम नहीं करेगा। नीचे Rep0 और Rep1 से Rep100 तक दिखेंगे (done)।</p>
-  </div>
-  <div class="controls">
-    <input id="search" class="search" placeholder="Search Rep number (e.g. 7)" />
-    <button class="btn" onclick="downloadZip()">Download ZIP</button>
-    <div style="min-width:72px; text-align:right">
-      <div style="font-size:12px; color:var(--muted)">Total</div>
-      <div class="count" id="totalCount">101</div>
+  <div class="wrap">
+    <div class="head">
+      <div class="logo">6z</div>
+      <div>
+        <div class="title">6z Mass</div>
+        <div class="subtitle">Secure Panel • UI Demo</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <input id="target" type="text" placeholder="Target username (optional)">
+      <div class="row">
+        <input id="count" type="number" placeholder="100" min="1" value="100">
+        <button id="startBtn" class="btn">Start</button>
+      </div>
+
+      <div class="progressWrap">
+        <div class="bar" aria-hidden><div id="barInner" class="barInner"></div></div>
+        <div class="small" id="statusText">Idle</div>
+      </div>
+
+      <div id="log" class="log"></div>
     </div>
   </div>
-</header>
-
-<main>
-  <div class="grid" id="grid"></div>
-</main>
-
-<footer>
-  <div>Made for: <strong>6z Era</strong></div>
-  <div>Replica preview — <span class="rep">Rep0, Rep1 … Rep100</span></div>
-</footer>
 
 <script>
-  // Generate Rep0 then Rep1..Rep100
-  const grid = document.getElementById('grid');
-  const items = [];
-  items.push({id: 'Rep0', label: 'Rep0', done: false});
-  for(let i=1;i<=100;i++){
-    items.push({id: 'Rep'+i, label: 'Rep'+i, done: true});
+const logEl = document.getElementById('log');
+const barInner = document.getElementById('barInner');
+const statusText = document.getElementById('statusText');
+const startBtn = document.getElementById('startBtn');
+
+function appendLine(txt){
+  logEl.innerHTML += txt + '\\n';
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function resetUI(){
+  barInner.style.width = '0%';
+  statusText.textContent = 'Idle';
+  logEl.innerHTML = '';
+}
+
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function runProcess(total){
+  resetUI();
+  appendLine('aye one rep0'); // first message as requested
+  await sleep(500);
+
+  statusText.textContent = 'Running...';
+  for(let i=1;i<=total;i++){
+    appendLine(i + ' rep0 done');
+    // update progress
+    let pct = Math.round((i/total)*100);
+    barInner.style.width = pct + '%';
+    statusText.textContent = 'Running • ' + pct + '%';
+    // small varying delay to look natural
+    await sleep(40 + Math.random()*80);
   }
 
-  function render(list){
-    grid.innerHTML = '';
-    list.forEach(it=>{
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.innerHTML = `
-        <div>
-          <div class="rep">ID: ${it.id}</div>
-          <div class="title">${it.label}</div>
-        </div>
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-top:8px;">
-          <div class="badge ${it.done ? 'done' : ''}">${it.done ? 'DONE' : 'PENDING'}</div>
-          <div style="font-size:12px; color:var(--muted)">Preview</div>
-        </div>
-      `;
-      grid.appendChild(div);
-    });
-    document.getElementById('totalCount').textContent = list.length;
-  }
+  statusText.textContent = 'Completed ✔️';
+  appendLine('\\nAll processes completed successfully.');
+}
 
-  render(items);
-
-  // search
-  document.getElementById('search').addEventListener('input', function(e){
-    const q = e.target.value.trim().toLowerCase();
-    if(!q){ render(items); return; }
-    const filtered = items.filter(it => it.id.toLowerCase().includes(q) || it.label.toLowerCase().includes(q));
-    render(filtered);
-  });
-
-  // Download zip link will be provided externally; attempt to open known path
-  function downloadZip(){
-    const url = './6z_era_clone.zip';
-    // Try to navigate to link; if not present, user can download from provided sandbox link.
-    window.location.href = url;
-  }
+startBtn.addEventListener('click', ()=>{
+  let c = parseInt(document.getElementById('count').value) || 100;
+  // clamp to 1..1000 to be safe
+  if(c < 1) c = 1;
+  if(c > 1000) c = 1000;
+  runProcess(c);
+});
 </script>
 </body>
 </html>
