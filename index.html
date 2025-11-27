@@ -1,145 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>6z Mass</title>
+<meta charset="UTF-8">
+<title>6Z MASS</title>
 <style>
-  :root{
-    --bg1:#0f0f1a; --bg2:#08121a; --accent:#00e6a8; --card:#0b0b0f;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; min-height:100vh;
-    background:linear-gradient(135deg,var(--bg1),var(--bg2));
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    color:#e6fff6; display:flex; align-items:center; justify-content:center;
-    padding:20px;
-  }
+    body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: #0f0;
+        font-family: Consolas, monospace;
+        overflow-x: hidden;
+    }
 
-  .wrap{
-    width:380px; max-width:96%;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border:1px solid rgba(0,230,168,0.12);
-    border-radius:12px; padding:18px; box-shadow:0 10px 30px rgba(2,8,15,0.6);
-  }
+    .header {
+        width: 100%;
+        padding: 20px;
+        font-size: 32px;
+        text-align: center;
+        color: #0f0;
+        letter-spacing: 4px;
+        border-bottom: 2px solid #0f0;
+        text-shadow: 0 0 20px #0f0;
+    }
 
-  .head{
-    display:flex; align-items:center; gap:12px; margin-bottom:14px;
-  }
-  .logo{
-    width:56px; height:56px; border-radius:10px;
-    background:linear-gradient(135deg,#00140a,#003b2a);
-    display:flex; align-items:center; justify-content:center;
-    font-weight:700; color:var(--accent); font-size:18px;
-    box-shadow:0 6px 16px rgba(0,0,0,0.6), inset 0 -6px 12px rgba(0,0,0,0.15);
-  }
-  .title{
-    font-size:20px; letter-spacing:1px; color:#dffef0;
-  }
-  .subtitle{font-size:12px; color:rgba(220,255,240,0.7)}
+    .container {
+        padding: 30px;
+        width: 90%;
+        margin: auto;
+    }
 
-  .panel{margin-top:8px;}
-  input[type=text], input[type=number]{
-    width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(0,230,168,0.08);
-    background:transparent; color:inherit; outline:none; font-size:14px;
-  }
+    .repo {
+        padding: 10px;
+        margin-bottom: 5px;
+        background: rgba(0, 255, 0, 0.08);
+        border-left: 4px solid #0f0;
+        font-size: 18px;
+        transition: 0.2s;
+    }
 
-  .row{display:flex; gap:8px; margin-top:10px;}
-  .btn{
-    flex:1; padding:10px 12px; border-radius:8px; border:none; cursor:pointer;
-    background:linear-gradient(90deg,var(--accent),#00ffd0); color:#00130a; font-weight:700;
-    box-shadow:0 6px 18px rgba(0,230,168,0.08);
-  }
-  .btn.secondary{background:transparent; color:var(--accent); border:1px solid rgba(0,230,168,0.08); font-weight:600}
+    .repo:hover {
+        background: rgba(0, 255, 0, 0.18);
+        transform: scale(1.02);
+    }
 
-  .progressWrap{margin-top:16px;}
-  .bar{
-    width:100%; height:12px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden;
-    border:1px solid rgba(0,0,0,0.3);
-  }
-  .barInner{height:100%; width:0%; background:linear-gradient(90deg,#00e6a8,#00ffd0); transition:width 0.12s linear;}
+    .loading {
+        animation: blink 1s infinite;
+    }
 
-  .log{
-    margin-top:14px; height:230px; overflow:auto; background:#040606; border-radius:8px; padding:12px;
-    border:1px solid rgba(0,230,168,0.04); font-family:monospace; font-size:13px; color:#bfffe8;
-    white-space:pre-wrap;
-  }
-  .small{font-size:12px; color:rgba(200,255,240,0.7); margin-top:6px; text-align:center}
+    @keyframes blink {
+        0% {opacity: 0.2;}
+        50% {opacity: 1;}
+        100% {opacity: 0.2;}
+    }
 </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="head">
-      <div class="logo">6z</div>
-      <div>
-        <div class="title">6z Mass</div>
-        <div class="subtitle">Secure Panel • UI Demo</div>
-      </div>
-    </div>
 
-    <div class="panel">
-      <input id="target" type="text" placeholder="Target username (optional)">
-      <div class="row">
-        <input id="count" type="number" placeholder="100" min="1" value="100">
-        <button id="startBtn" class="btn">Start</button>
-      </div>
+<div class="header">6Z MASS</div>
 
-      <div class="progressWrap">
-        <div class="bar" aria-hidden><div id="barInner" class="barInner"></div></div>
-        <div class="small" id="statusText">Idle</div>
-      </div>
-
-      <div id="log" class="log"></div>
-    </div>
-  </div>
+<div class="container" id="repoList"></div>
 
 <script>
-const logEl = document.getElementById('log');
-const barInner = document.getElementById('barInner');
-const statusText = document.getElementById('statusText');
-const startBtn = document.getElementById('startBtn');
+    const repoList = document.getElementById("repoList");
 
-function appendLine(txt){
-  logEl.innerHTML += txt + '\\n';
-  logEl.scrollTop = logEl.scrollHeight;
-}
+    for (let i = 1; i <= 100; i++) {
+        let div = document.createElement("div");
+        div.className = "repo loading";
+        div.id = "repo" + i;
+        div.textContent = i + " repo — loading...";
+        repoList.appendChild(div);
 
-function resetUI(){
-  barInner.style.width = '0%';
-  statusText.textContent = 'Idle';
-  logEl.innerHTML = '';
-}
-
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-async function runProcess(total){
-  resetUI();
-  appendLine('aye one rep0'); // first message as requested
-  await sleep(500);
-
-  statusText.textContent = 'Running...';
-  for(let i=1;i<=total;i++){
-    appendLine(i + ' rep0 done');
-    // update progress
-    let pct = Math.round((i/total)*100);
-    barInner.style.width = pct + '%';
-    statusText.textContent = 'Running • ' + pct + '%';
-    // small varying delay to look natural
-    await sleep(40 + Math.random()*80);
-  }
-
-  statusText.textContent = 'Completed ✔️';
-  appendLine('\\nAll processes completed successfully.');
-}
-
-startBtn.addEventListener('click', ()=>{
-  let c = parseInt(document.getElementById('count').value) || 100;
-  // clamp to 1..1000 to be safe
-  if(c < 1) c = 1;
-  if(c > 1000) c = 1000;
-  runProcess(c);
-});
+        setTimeout(() => {
+            div.textContent = i + " repo — DONE ✔";
+            div.classList.remove("loading");
+        }, 80 * i);
+    }
 </script>
+
 </body>
 </html>
